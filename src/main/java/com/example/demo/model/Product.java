@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "products")
@@ -16,8 +17,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    UUID id;
 
     String title;
 

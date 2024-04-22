@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "accounts")
 @Data
@@ -13,8 +15,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    UUID id;
 
     @OneToOne(mappedBy = "account")
     Balance balance;
