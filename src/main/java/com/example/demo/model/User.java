@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -28,7 +29,9 @@ public class User {
     @Column(nullable = false)
     String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonIgnore
     List<Account> accounts;
 
     // Many-To-Many (1-st option)
