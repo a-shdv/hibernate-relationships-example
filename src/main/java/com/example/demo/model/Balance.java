@@ -22,6 +22,7 @@ public class Balance {
     BigDecimal amount;
 
     @OneToOne
+    @MapsId
     @JoinColumn
     Account account;
 }

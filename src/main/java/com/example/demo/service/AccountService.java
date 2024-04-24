@@ -10,8 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -32,12 +32,16 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountUserDto save(UUID id,AccountUserDto accountUserDto) {
-        Account account = accountRepo.findById(id).get();
-        User user = userRepo.findByUsername(accountUserDto.username()).get();
-        account.setUser(user);
-        user.getAccounts().add(account);
-        accountRepo.save(account);
+    public AccountUserDto save(UUID id, AccountUserDto accountUserDto) {
+        Optional<Account> account = accountRepo.findById(id);
+        if (account.isPresent()) {
+            Optional<User> user = userRepo.findByUsername(accountUserDto.username());
+            if (user.isPresent()) {
+                account.get().setUser(user.get());
+                user.get().getAccounts().add(account.get());
+                accountRepo.save(account.get());
+            }
+        }
         return accountUserDto;
     }
 }
